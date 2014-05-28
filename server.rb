@@ -36,6 +36,16 @@ def find_actor_movies(id)
   actor_id
 end
 
+def find_actor_mov(id)
+  actor_id = db_connection do |conn|
+    conn.exec("SELECT movies.title, cast_members.character, cast_members.movie_id FROM movies
+              JOIN cast_members ON movies.id = cast_members.movie_id
+              WHERE cast_members.actor_id = #{id}")
+  end
+  # TODO make this an array?
+  actor_id
+end
+
 #==============================================================================
 
 def find_movie_data
@@ -83,15 +93,15 @@ get '/actors' do
   @title = "Launch Academy Movies"
   @page_title = "All Actors"
   @actors = db_connection do |conn|
-              # TODO remove limit
-              conn.exec('SELECT actors.name, actors.id FROM actors ORDER BY actors.name LIMIT 10')
+              conn.exec('SELECT actors.name, actors.id FROM actors ORDER BY actors.name')
             end
   erb :'actors/actors'
 end
 
 get '/actors/:id' do
   @page_title = find_actor_name(params[:id])
-  @actor_movies = find_actor_movies(params[:id])
+  @title = @page_title
+  @actor_movies = find_actor_mov(params[:id])
   erb :'actors/show.html'
 end
 
@@ -105,6 +115,7 @@ end
 get '/movies/:id' do
   @movie_details = find_movie_details(params[:id])
   @page_title = @movie_details.first["title"]
+  @title = @page_title
   erb :'movies/show.html'
 end
 
