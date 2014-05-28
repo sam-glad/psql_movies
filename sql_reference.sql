@@ -13,7 +13,7 @@ SELECT movies.title, cast_members.character FROM movies
 -- The table includes the movie title, the year it was released, the rating,
 -- the genre, and the studio that produced it. Each movie title is a
 -- link to the details page for that movie.
-SELECT movies.title, movies.year, movies.rating, genres.name, studios.name FROM movies
+SELECT movies.title AS title, movies.year AS year, movies.rating AS rating, genres.name AS genre, studios.name AS studio FROM movies
   JOIN genres ON movies.genre_id = genres.id
   JOIN studios ON movies.studio_id = studios.id;
 
@@ -27,4 +27,4 @@ SELECT genres.name, studios.name, actors.name, cast_members.character FROM movie
   JOIN studios ON movies.studio_id = studios.id
   JOIN cast_members ON movies.id = cast_members.movie_id
   JOIN actors ON actors.id = cast_members.actor_id
-  WHERE movies.title = 'Troll 2';
+  WHERE movies.id = 'POTATO';
