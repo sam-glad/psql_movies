@@ -8,7 +8,7 @@
   <th width="300" align="left">Studio</th>
   </thead>
   <tr>
-  <td> <%= movie["title"] %> </td>
+  <td><a href="/movies/<%="#{movie["id"]}"%>"><%= movie["title"] %></a></td>
   <td> <%= movie["year"] %> </td>
   <td> <%= movie["rating"] %> </td>
   <td> <%= movie["genre"] %> </td>
@@ -16,3 +16,4 @@
   </tr>
 </table>
 <% end %>
+

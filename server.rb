@@ -47,10 +47,22 @@ movie_data = db_connection do |conn|
 movie_data
 end
 
+def find_movie_det
+  movie_det =
+    db_connection do |conn|
+      conn.exec("SELECT movies.title AS title, movies.year AS year, movies.rating AS rating, genres.name AS genre, studios.name AS studio, movies.id AS id FROM movies
+                  JOIN genres ON movies.genre_id = genres.id
+                  JOIN studios ON movies.studio_id = studios.id")
+    end
+    movie_det.to_a
+end
+
 def find_movie_details(id)
   movie_details =
     db_connection do |conn|
-      conn.exec("SELECT movies.title AS title, genres.name AS genre, studios.name AS studio, actors.name AS actor, cast_members.character AS character FROM movies
+      conn.exec("SELECT movies.title AS title, genres.name AS genre, actors.id AS id,
+                studios.name AS studio, actors.name AS actor,
+                cast_members.character AS character FROM movies
                 JOIN genres ON movies.genre_id = genres.id
                 JOIN studios ON movies.studio_id = studios.id
                 JOIN cast_members ON movies.id = cast_members.movie_id
@@ -63,6 +75,7 @@ end
 #==============================================================================
 
 get '/' do
+  @page_title = "WELCOME TO THE  FD H  LAUNCH ACADEMYY MOVIE LIST!1!11!ONE!"
   erb :index
 end
 
@@ -85,7 +98,7 @@ end
 get '/movies' do
   @title = "Movies"
   @page_title = "Movies"
-  @movie_data = find_movie_data
+  @movie_data = find_movie_det
   erb :'movies/index.html'
 end
 

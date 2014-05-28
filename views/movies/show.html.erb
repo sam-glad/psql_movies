@@ -7,7 +7,7 @@
 <%@movie_details.each do |detail| %>
 <ul>
 <li>
-<%= "#{detail["actor"]}" %>
+<a href="/actors/<%="#{detail["id"]}"%>"><%= "#{detail["actor"]}" %></a>
 <br>
 <%= "As \"#{detail["character"]}\"" %>
 
